@@ -3,7 +3,7 @@ import PyPDF2
 import openai
 
 # Replace with your actual OpenAI API key
-openai.api_key = "YOUR_OPENAI_API_KEY"
+openai.api_key = "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"
 
 st.set_page_config(page_title="AI Resume Screener", layout="centered")
 
