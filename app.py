@@ -1,6 +1,7 @@
 import streamlit as st
 import PyPDF2
 import openai
+from openai import OpenAI
 
 # Replace with your actual OpenAI API key
 openai.api_key = "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"
@@ -39,14 +40,14 @@ Please answer the following:
 Format your response cleanly.
 """
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.5,
-            max_tokens=800
-        )
+        response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.5,
+    max_tokens=800
+)
 
         st.markdown("### AI Analysis")
         st.write(response['choices'][0]['message']['content'])
