@@ -1,15 +1,10 @@
 import streamlit as st
 import PyPDF2
-import openai
 from openai import OpenAI
 
-# Replace with your actual OpenAI API key
-openai.api_key = "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"
-
-st.set_page_config(page_title="AI Resume Screener", layout="centered")
+client = OpenAI()
 
 st.title("Bluebird AI Resume Screener")
-st.markdown("Upload a resume and paste the job description. This AI will tell you how well the candidate fits the role.")
 
 uploaded_file = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
 job_description = st.text_area("Paste the Job Description Here")
@@ -23,7 +18,7 @@ if uploaded_file and job_description:
 
     with st.spinner("Analyzing..."):
         prompt = f"""
-You are an AI HR assistant. A resume has been uploaded. Based on the following job description, analyze the resume.
+You are an AI HR assistant. A resume has been uploaded. Based on the following job description, analyze how well the candidate fits the role.
 
 Job Description:
 {job_description}
@@ -41,13 +36,13 @@ Format your response cleanly.
 """
 
         response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "user", "content": prompt}
-    ],
-    temperature=0.5,
-    max_tokens=800
-)
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.5,
+            max_tokens=800
+        )
 
         st.markdown("### AI Analysis")
-        st.write(response['choices'][0]['message']['content'])
+        st.write(response.choices[0].message.content)
